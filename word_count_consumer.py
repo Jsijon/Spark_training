@@ -11,7 +11,7 @@ spark = SparkSession \
 userSchema = StructType([StructField('line', StringType(), True)])   
 
 lines_df = spark \
-  .read \
+  .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
   .option("startingOffsets", "earliest") \
