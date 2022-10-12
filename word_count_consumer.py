@@ -20,6 +20,7 @@ lines_df = spark \
 
 
 new_lines_df = lines_df.select(from_json(col("value").cast('string'), userSchema).alias('line'))
+new_lines_df = new_lines_df.select("line.*")
 
 new_lines_df = new_lines_df.select(
    explode(
@@ -31,7 +32,7 @@ wordCounts = new_lines_df.groupBy("word").count()
 
 query = wordCounts \
     .writeStream \
-    .outputMode("append") \
+    .outputMode("complete") \
     .format("console") \
     .start()
 
